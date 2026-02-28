@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nhóm 1</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Quicksand',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#d4fc79,#b8f2e6);
+    overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:white;
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    padding:15px 0;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    z-index:1000;
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:120px 20px 40px;
+}
+
+header h1{
+    font-size:45px;
+}
+
+/* MEMBERS */
+.container{
+    max-width:1100px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.avatar{
+    width:110px;
+    height:110px;
+    object-fit:contain;
+    margin-bottom:10px;
+}
+
+/* Màu chữ */
+.yen{color:#2ecc71;font-weight:bold;}
+.trinh{color:#3498db;font-weight:bold;}
+.an{color:#9b59b6;font-weight:bold;}
+
+/* POPUP */
+.popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    visibility:hidden;
+    opacity:0;
+    transition:0.3s;
+}
+
+.popup.active{
+    visibility:visible;
+    opacity:1;
+}
+
+.popup-box{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    max-width:350px;
+}
+
+/* CÁNH HOA */
+.petal{
+    position:fixed;
+    top:-20px;
+    width:15px;
+    height:20px;
+    background:pink;
+    border-radius:50% 50% 50% 0;
+    transform:rotate(45deg);
+    opacity:0.8;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>Trang chủ</div>
+    <div>Giới thiệu</div>
+    <div>Thành viên</div>
+</nav>
+
+<header>
+    <h1>Xin chào đây là trang web của Nhóm 1 💛</h1>
+</header>
+
+<section class="container">
+
+<div class="card" onclick="showQuote('Yến Nhi','Hãy luôn tự tin và tỏa sáng 🌸')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG63.png" class="avatar">
+<h3 class="yen">Yến Nhi</h3>
+</div>
+
+<div class="card" onclick="showQuote('Tuyết Trinh','Kiên trì là chìa khóa của thành công 💙')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG70.png" class="avatar">
+<h3 class="trinh">Tuyết Trinh</h3>
+</div>
+
+<div class="card" onclick="showQuote('Khánh An','Mỗi ngày là một bước tiến 💜')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG55.png" class="avatar">
+<h3 class="an">Khánh An</h3>
+</div>
+
+<div class="card" onclick="showQuote('Ngọc Khánh','Không gì là không thể 💪')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG31.png" class="avatar">
+<h3>Ngọc Khánh</h3>
+</div>
+
+<div class="card" onclick="showQuote('Thành Nhân','Cố gắng hôm nay, thành công ngày mai 🚀')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG24.png" class="avatar">
+<h3>Thành Nhân</h3>
+</div>
+
+<div class="card" onclick="showQuote('Anh Minh','Luôn học hỏi và phát triển 📚')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG45.png" class="avatar">
+<h3>Anh Minh</h3>
+</div>
+
+<div class="card" onclick="showQuote('Hoàng Long','Dám nghĩ dám làm 🔥')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG48.png" class="avatar">
+<h3>Hoàng Long</h3>
+</div>
+
+<div class="card" onclick="showQuote('Đăng Khoa','Ước mơ lớn – Hành động lớn ✨')">
+<img src="https://pngimg.com/uploads/minions/minions_PNG52.png" class="avatar">
+<h3>Đăng Khoa</h3>
+</div>
+
+</section>
+
+<div class="popup" id="popup" onclick="closePopup()">
+    <div class="popup-box" onclick="event.stopPropagation()">
+        <h3 id="name"></h3>
+        <p id="quote"></p>
+    </div>
+</div>
+
+<script>
+function showQuote(name, quote){
+    document.getElementById("name").innerText=name;
+    document.getElementById("quote").innerText=quote;
+    document.getElementById("popup").classList.add("active");
+}
+
+function closePopup(){
+    document.getElementById("popup").classList.remove("active");
+}
+
+/* CÁNH HOA BAY */
+function createPetal(){
+    const petal=document.createElement("div");
+    petal.classList.add("petal");
+    petal.style.left=Math.random()*window.innerWidth+"px";
+    petal.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(petal);
+    setTimeout(()=>{petal.remove();},10000);
+}
+setInterval(createPetal,300);
+</script>
+
+</body>
+</html>
